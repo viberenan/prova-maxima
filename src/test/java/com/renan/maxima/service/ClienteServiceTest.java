@@ -6,9 +6,11 @@ import java.util.Set;
 import com.renan.maxima.dto.ClienteDTO;
 import com.renan.maxima.dto.EnderecoDTO;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 @SpringBootTest
 public class ClienteServiceTest {
@@ -16,7 +18,10 @@ public class ClienteServiceTest {
 	@Autowired
 	private ClienteService service;
 	
+	private ClienteDTO dto = new ClienteDTO();
+	
 	@Test
+	@Order(1)
 	void salvarCliente(){
 		
 		EnderecoDTO dto1 = new EnderecoDTO();
@@ -43,16 +48,21 @@ public class ClienteServiceTest {
 		enderecos.add(dto1);
 		enderecos.add(dto2);
 		
-		ClienteDTO dto = new ClienteDTO();
-		
-		dto.setCnpj("11111111");
-		dto.setCodCliente("123");
-		dto.setNome("Teste");
-		dto.setEnderecos(enderecos);
+		this.dto.setCnpj("11111111");
+		this.dto.setCodCliente("123");
+		this.dto.setNome("Teste");
+		this.dto.setEnderecos(enderecos);
 		
 		service.salvarCliente(dto);
 		
 		
+	}
+	
+	@Test
+	@Order(2)
+	void buscarTodosClientes() {
+		Page<ClienteDTO> dto = service.buscarTodosOsClientesComFiltro("Tes", null, null, null);
+		System.out.println(dto.toString());
 	}
 	
 }

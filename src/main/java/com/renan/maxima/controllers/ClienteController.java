@@ -6,12 +6,15 @@ import com.renan.maxima.service.ClienteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,10 +61,28 @@ public class ClienteController {
 		} catch (ConstraintViolationException ex) {
 			log.info(req.getMethod() + " - " + req.getRequestURI() + " - Status 400");
 			throw ex;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error(req.getMethod() + " - " + req.getRequestURI() + " - Status 500");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
+	}
+
+	@GetMapping
+	@Operation(summary = "Buscar Clientes", description = "Busca Lista de clientes paginada")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Retorna lista paginada de clientes"),
+			@ApiResponse(responseCode = "500", description = "Erro ao listar clientes") })
+	public ResponseEntity<?> buscarClintesComFiltro(@RequestParam(value = "nome", required = false) String nome,
+			@RequestParam(value = "cod", required = false) String codCliente,
+			@RequestParam(value = "cnpj", required = false) String cnpj, Pageable pageable) {
+		try {
+			Page<ClienteDTO> pageCliente = service.buscarTodosOsClientesComFiltro(nome, codCliente, cnpj, pageable);
+			log.info(req.getMethod() + " - " + req.getRequestURI() + " - Status 200");
+			return ResponseEntity.status(HttpStatus.OK).body(pageCliente);
+		} catch (Exception e) {
+			log.error(req.getMethod() + " - " + req.getRequestURI() + " - Status 500");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+
 	}
 
 }
