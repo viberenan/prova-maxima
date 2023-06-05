@@ -62,13 +62,28 @@
           <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef class="text-center">AÇÕES</th>
             <td mat-cell *matCellDef="let cliente" class="text-center">
-              <button mat-mini-fab color="primary" class="small-button">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="small-button"
+                (click)="abrirModalAtualizar(cliente)"
+              >
                 <i class="fa-solid fa-pen"></i>
               </button>
-              <button mat-mini-fab color="warn" class="small-button" (click)="excluirCliente(cliente)">
+              <button
+                mat-mini-fab
+                color="warn"
+                class="small-button"
+                (click)="excluirCliente(cliente)"
+              >
                 <i class="fa-solid fa-trash-can"></i>
               </button>
-              <button mat-mini-fab color="accent" class="small-button">
+              <button
+                mat-mini-fab
+                color="accent"
+                class="small-button"
+                disabled="true"
+              >
                 <i class="fa-solid fa-map-location-dot"></i>
               </button>
             </td>

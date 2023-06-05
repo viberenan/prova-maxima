@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="text-center">NOVO CLIENTE</h2>
+<h2 mat-dialog-title class="text-center">{{ data.nomeTitulo }}</h2>
 <mat-divider></mat-divider>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="salvar()">
@@ -139,7 +139,12 @@
           <ng-container matColumnDef="acao">
             <th mat-header-cell *matHeaderCellDef class="text-center">Ações</th>
             <td mat-cell *matCellDef="let endereco" class="text-center">
-              <button mat-mini-fab color="warn" class="small-button" (click)="removerEndereco(endereco)">
+              <button
+                mat-mini-fab
+                color="warn"
+                class="small-button"
+                (click)="removerEndereco(endereco)"
+              >
                 <i class="fa-solid fa-xmark"></i>
               </button>
             </td>
@@ -155,5 +160,11 @@
 <mat-divider></mat-divider>
 <mat-dialog-actions align="center">
   <button mat-flat-button (click)="fecharDialog()">CANCELAR</button>
-  <button mat-flat-button color="primary" (click)="salvar()">CONFIRMAR</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="data.cliente ? atualizar() : salvar()"
+  >
+    CONFIRMAR
+  </button>
 </mat-dialog-actions>

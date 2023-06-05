@@ -39,6 +39,11 @@ export class ClienteService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.apiUrl, dto, { headers: headers });
   }
+  editarCliente(id: Number, dto: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<any>(url, dto, { headers: headers });
+  }
   excluirCliente(id: Number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);

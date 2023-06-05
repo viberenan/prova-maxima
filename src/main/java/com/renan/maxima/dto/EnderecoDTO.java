@@ -25,6 +25,7 @@ public class EnderecoDTO {
 	}
 
 	public EnderecoDTO(Endereco endereco) {
+		this.id = endereco.getId();
 		this.bairro = endereco.getBairro();
 		this.cidade = endereco.getCidade();
 		this.estado = endereco.getEstado();

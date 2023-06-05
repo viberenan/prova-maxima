@@ -59,14 +59,26 @@ export class HomeComponent implements OnInit {
   abrirModalSalvar() {
     const dialogRef = this.dialog.open(ModalClienteComponent, {
       width: '1200px',
+      data: { nomeTitulo: 'NOVO CLIENTE' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.buscarClientes();
+    });
+  }
+  abrirModalAtualizar(cliente: any) {
+    const dialogRef = this.dialog.open(ModalClienteComponent, {
+      width: '1200px',
+      data: { nomeTitulo: 'ATUALIZAR CLIENTE', cliente: cliente },
     });
     dialogRef.afterClosed().subscribe((result) => {
       this.buscarClientes();
     });
   }
   excluirCliente(cliente: any) {
-    this.clienteService.excluirCliente(cliente.id).subscribe((response: any) => {
-      this.buscarClientes();
-    });
+    this.clienteService
+      .excluirCliente(cliente.id)
+      .subscribe((response: any) => {
+        this.buscarClientes();
+      });
   }
 }

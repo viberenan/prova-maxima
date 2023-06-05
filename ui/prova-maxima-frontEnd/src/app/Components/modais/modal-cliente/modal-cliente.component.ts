@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EnderecoDTO } from '../../models/endereco.dto';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +18,8 @@ export class ModalClienteComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalClienteComponent>,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   form!: FormGroup;
@@ -61,6 +62,15 @@ export class ModalClienteComponent implements OnInit {
             this.buscarEnderecoPorCep(value);
           }
         });
+    }
+    if (this.data.cliente) {
+      this.form.setValue({
+        codCliente: this.data.cliente.codCliente,
+        nome: this.data.cliente.nome,
+        cnpj: this.data.cliente.cnpj,
+      });
+      this.enderecos = this.data.cliente.enderecos;
+      this.dataSource = new MatTableDataSource(this.enderecos);
     }
   }
 
@@ -106,6 +116,22 @@ export class ModalClienteComponent implements OnInit {
       };
       this.clienteService
         .salvarCliente(clienteDTO)
+        .subscribe((response: any) => {
+          this.fecharDialog();
+        });
+    }
+  }
+
+  atualizar() {
+    if (this.form.valid && this.enderecos.length > 0) {
+      const clienteDTO = {
+        codCliente: this.form.get('codCliente')?.value,
+        nome: this.form.get('nome')?.value,
+        cnpj: this.form.get('cnpj')?.value,
+        enderecos: this.enderecos,
+      };
+      this.clienteService
+        .editarCliente(this.data.cliente.id, clienteDTO)
         .subscribe((response: any) => {
           this.fecharDialog();
         });
