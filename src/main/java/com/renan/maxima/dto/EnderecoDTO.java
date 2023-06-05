@@ -11,6 +11,7 @@ import com.renan.maxima.entity.Endereco;
 
 public class EnderecoDTO {
 
+	private Long id;
 	private String logradouro;
 	private String numero;
 	private String bairro;
@@ -98,8 +99,17 @@ public class EnderecoDTO {
 		this.cep = cep;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Endereco toEntity(Cliente cliente) {
 		Endereco newEndereco = new Endereco();
+		newEndereco.setId(Objects.nonNull(id) ? id : null);
 		newEndereco.setBairro(bairro);
 		newEndereco.setCidade(cidade);
 		newEndereco.setEstado(estado);

@@ -39,4 +39,8 @@ export class ClienteService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.apiUrl, dto, { headers: headers });
   }
+  excluirCliente(id: Number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url);
+  }
 }

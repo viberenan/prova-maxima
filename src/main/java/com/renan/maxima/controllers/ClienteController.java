@@ -1,6 +1,7 @@
 package com.renan.maxima.controllers;
 
 import com.renan.maxima.dto.ClienteDTO;
+import com.renan.maxima.exception.NaoEncontradoException;
 import com.renan.maxima.service.ClienteService;
 
 import org.slf4j.Logger;
@@ -11,8 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +73,25 @@ public class ClienteController {
 		}
 	}
 
+	@PutMapping("/{id}")
+	@Operation(summary = "Atualizar Cliente", description = "Atualiza um Cliente")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Cliente atualizado com sucesso"),
+			@ApiResponse(responseCode = "404", description = "Cliente não entrontado"),
+			@ApiResponse(responseCode = "500", description = "Erro ao atualizar o cliente") })
+	public ResponseEntity<?> AtualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+		try {
+			ClienteDTO cliente = service.editarCliente(id, dto);
+			log.info(req.getMethod() + " - " + req.getRequestURI() + " - Status 200");
+			return ResponseEntity.status(HttpStatus.OK).body(cliente);
+		} catch (NaoEncontradoException ex) {
+			log.info(req.getMethod() + " - " + req.getRequestURI() + " - Status 404");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		} catch (Exception e) {
+			log.error(req.getMethod() + " - " + req.getRequestURI() + " - Status 500");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+
 	@GetMapping
 	@Operation(summary = "Buscar Clientes", description = "Busca Lista de clientes paginada")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Retorna lista paginada de clientes"),
@@ -84,7 +107,21 @@ public class ClienteController {
 			log.error(req.getMethod() + " - " + req.getRequestURI() + " - Status 500");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
+	}
 
+	@DeleteMapping("/{id}")
+	@Operation(summary = "Deletar Cliente", description = "Deleta um cliente pelo seu id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Cliente excluido com sucesso"),
+			@ApiResponse(responseCode = "500", description = "Erro ao excluir cliente") })
+	public ResponseEntity<?> excluirCliente(@PathVariable Long id) {
+		try {
+			this.service.excluirCliente(id);
+			log.info(req.getMethod() + " - " + req.getRequestURI() + " - Status 200");
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (Exception e) {
+			log.error(req.getMethod() + " - " + req.getRequestURI() + " - Status 500");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
 }

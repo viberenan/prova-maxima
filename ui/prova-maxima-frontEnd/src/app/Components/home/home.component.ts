@@ -64,4 +64,9 @@ export class HomeComponent implements OnInit {
       this.buscarClientes();
     });
   }
+  excluirCliente(cliente: any) {
+    this.clienteService.excluirCliente(cliente.id).subscribe((response: any) => {
+      this.buscarClientes();
+    });
+  }
 }
