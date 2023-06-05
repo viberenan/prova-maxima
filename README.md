@@ -1,4 +1,4 @@
-PROVA JAVA LOGÕSTICA
+PROVA JAVA LOG√çSTICA
 
 Projeto do processo da Maxima Tech. 
 
@@ -9,6 +9,8 @@ Ambiente de Desenvolvimento:
 Clone o projeto. Na raiz do projeto possui a pasta ui onde se encontra o frontend em angular. O projeto possui swagger configurado.
  
 Links: 
-Backend: localhost:8082/maxima. 
-Frontend: localhost:4200/home. 
+Backend: localhost:8082/maxima.
+
+Frontend: localhost:4200/home.
+
 Swagger:  localhost:8082/maxima/swagger-ui/
