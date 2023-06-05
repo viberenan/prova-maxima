@@ -16,22 +16,22 @@ public class EnderecoDTO {
 	private String bairro;
 	private String cidade;
 	private String estado;
-	private String pais;
+	private String cep;
 	private Double latitude;
 	private Double longitude;
 
 	public EnderecoDTO() {
 	}
-	
+
 	public EnderecoDTO(Endereco endereco) {
 		this.bairro = endereco.getBairro();
 		this.cidade = endereco.getCidade();
 		this.estado = endereco.getEstado();
 		this.latitude = endereco.getLatitude();
+		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
 		this.longitude = endereco.getLongitude();
 		this.numero = endereco.getNumero();
-		this.pais = endereco.getPais();
 	}
 
 	public String getLogradouro() {
@@ -74,14 +74,6 @@ public class EnderecoDTO {
 		this.estado = estado;
 	}
 
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -98,9 +90,16 @@ public class EnderecoDTO {
 		this.longitude = longitude;
 	}
 
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 	public Endereco toEntity(Cliente cliente) {
 		Endereco newEndereco = new Endereco();
-		newEndereco.setPais(pais);
 		newEndereco.setBairro(bairro);
 		newEndereco.setCidade(cidade);
 		newEndereco.setEstado(estado);
@@ -109,12 +108,13 @@ public class EnderecoDTO {
 		newEndereco.setLongitude(longitude);
 		newEndereco.setNumero(numero);
 		newEndereco.setCliente(cliente);
+		newEndereco.setCep(cep);
 		return newEndereco;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bairro, cidade, estado, latitude, logradouro, longitude, numero, pais);
+		return Objects.hash(bairro, cep, cidade, estado, latitude, logradouro, longitude, numero);
 	}
 
 	@Override
@@ -126,10 +126,10 @@ public class EnderecoDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		EnderecoDTO other = (EnderecoDTO) obj;
-		return Objects.equals(bairro, other.bairro) && Objects.equals(cidade, other.cidade)
-				&& Objects.equals(estado, other.estado) && Objects.equals(latitude, other.latitude)
-				&& Objects.equals(logradouro, other.logradouro) && Objects.equals(longitude, other.longitude)
-				&& Objects.equals(numero, other.numero) && Objects.equals(pais, other.pais);
+		return Objects.equals(bairro, other.bairro) && Objects.equals(cep, other.cep)
+				&& Objects.equals(cidade, other.cidade) && Objects.equals(estado, other.estado)
+				&& Objects.equals(latitude, other.latitude) && Objects.equals(logradouro, other.logradouro)
+				&& Objects.equals(longitude, other.longitude) && Objects.equals(numero, other.numero);
 	}
 
 	@Override

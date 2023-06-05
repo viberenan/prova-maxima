@@ -29,7 +29,6 @@ public class ClienteServiceTest {
 		dto1.setCidade("Goiânia");
 		dto1.setLogradouro("Rua 207");
 		dto1.setNumero("89");
-		dto1.setPais("Brasil");
 		dto1.setEstado("GO");
 		dto1.setLatitude(40.7128);
 		dto1.setLongitude(-74.0060);
@@ -37,7 +36,6 @@ public class ClienteServiceTest {
 		EnderecoDTO dto2 = new EnderecoDTO();
 		dto2.setBairro("Bueno");
 		dto2.setCidade("Goiânia");
-		dto2.setPais("Brasil");
 		dto2.setLogradouro("T2");
 		dto2.setNumero("S/N");
 		dto2.setEstado("GO");

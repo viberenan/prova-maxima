@@ -23,7 +23,7 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "codCliente", nullable = false)
+	@Column(name = "codCliente")
 	private String codCliente;
 	
 	@NotBlank(message = "Nome é obrigatório")

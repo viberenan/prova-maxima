@@ -22,35 +22,35 @@ public class Endereco {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
-	
+
 	@NotBlank(message = "logradouro é obrigatório")
 	@Column(name = "logradouro", nullable = false)
 	private String logradouro;
-	
+
 	@NotBlank(message = "número é obrigatório")
 	@Column(name = "numero", nullable = false)
 	private String numero;
-	
+
 	@NotBlank(message = "bairro é obrigatório")
 	@Column(name = "bairro", nullable = false)
 	private String bairro;
-	
+
 	@NotBlank(message = "cidade é obrigatório")
 	@Column(name = "cidade", nullable = false)
 	private String cidade;
-	
+
+	@NotBlank(message = "cep é obrigatório")
+	@Column(name = "cep", nullable = false)
+	private String cep;
+
 	@NotBlank(message = "estado é obrigatório")
 	@Column(name = "estado", nullable = false)
 	private String estado;
-	
-	@NotBlank(message = "país é obrigatório")
-	@Column(name = "pais", nullable = false)
-	private String pais;
-	
+
 	@NotNull(message = "latitude é obrigatório")
 	@Column(name = "latitude", nullable = false)
 	private Double latitude;
-	
+
 	@NotNull(message = "longitude é obrigatório")
 	@Column(name = "longitude", nullable = false)
 	private Double longitude;
@@ -111,14 +111,6 @@ public class Endereco {
 		this.estado = estado;
 	}
 
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -133,6 +125,14 @@ public class Endereco {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 }
